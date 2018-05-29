@@ -42,8 +42,8 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public Iterable<Restaurant> getRestaurantLikeName(String name) {
-        return restaurantRepository.getRestaurantLikeName(name);
+    public Iterable<Restaurant> getRestaurantLikeName(String name, Integer id) {
+        return restaurantRepository.getRestaurantLikeName(name, id);
     }
 
     @Override

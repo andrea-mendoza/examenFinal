@@ -94,17 +94,22 @@ public class RestaurantController {
         }
 
 
-
+        byte[] bytes;
+        String fot;
         if(name.equals("")){
             City city = cityService.getCity(id);
             List<Restaurant> restaurants = city.getRestaurants();
+            for(int i=0; i<restaurants.size(); i++){
+                bytes = Base64.encode(restaurants.get(i).getFoto());
+                fot = new String(bytes,"UTF-8");
+                restaurants.get(i).setF(fot);
+            }
             model.addAttribute("restaurants",restaurants);
             return "searchCity";
         }
         else{
-            byte[] bytes;
-            String fot;
-            List<Restaurant> restaurants1 = (List<Restaurant>)restaurantService.getRestaurantLikeName(name);
+
+            List<Restaurant> restaurants1 = (List<Restaurant>)restaurantService.getRestaurantLikeName(name,id);
             for(int i=0; i<restaurants1.size(); i++){
                 bytes = Base64.encode(restaurants1.get(i).getFoto());
                 fot = new String(bytes,"UTF-8");

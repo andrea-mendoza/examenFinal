@@ -14,7 +14,7 @@ public interface RestaurantService {
 
     void deleteRestaurant(Integer id);
 
-    Iterable<Restaurant> getRestaurantLikeName(String name);
+    Iterable<Restaurant> getRestaurantLikeName(String name, Integer id);
 
     Iterable<Restaurant> getByCity(City cityId);
 }
