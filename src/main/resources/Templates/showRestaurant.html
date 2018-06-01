@@ -69,7 +69,7 @@
             <div class="jumbotron" name="Comments" th:each="comment : ${restaurant.comments}">
                     <b>Text: </b> <span th:text="${comment.text}"></span><br />
                     <b>Date: </b> <span th:text="${comment.creationDate}"></span><br />
-                    <b>User: </b> <span th:text="${comment.user.username}"></span><br />
+                    <b>User: </b> <a th:href="${'/profile/' + comment.user.id}" th:text="${comment.user.username}"></a><br />
                     <b>Likes: </b> <a th:text="${comment.likes}"></a>
                     <b>Score: </b> <a th:text="${comment.score}"></a>
                     <a type="button" class="btn btn-default" style="color:orange; background-color: #012438; border:none;" th:href="${'/commentlike/' + comment.id}"><span class="glyphicon glyphicon-thumbs-up"></span></a>

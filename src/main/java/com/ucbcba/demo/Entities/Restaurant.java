@@ -39,7 +39,7 @@ public class Restaurant {
     private List<LikeRestaurant> likeRestaurants;
 
     @Lob
-    @Column(columnDefinition="mediumblob")
+    @Column(columnDefinition="longblob")
     private byte[] foto;
 
     private String f;
@@ -119,4 +119,6 @@ public class Restaurant {
     public List<LikeRestaurant> getLikeRestaurants() { return likeRestaurants; }
 
     public void setLikeRestaurants(List<LikeRestaurant> likeRestaurants) { this.likeRestaurants = likeRestaurants; }
+
+
 }

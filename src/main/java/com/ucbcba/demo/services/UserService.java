@@ -8,4 +8,8 @@ public interface UserService {
     User findByUsername(String username);
 
     Iterable<User> listAllUsers();
+
+    User getUser(Integer id);
+
+    void deleteUser(Integer id);
 }

@@ -6,6 +6,7 @@ import com.ucbcba.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,9 +52,17 @@ public class RestaurantController {
     String home(Model model) {
         auth = SecurityContextHolder.getContext().getAuthentication();
         this.username = (auth.getName() == "anonymousUser")?"not logged in":auth.getName();
+        com.ucbcba.demo.Entities.User user = new com.ucbcba.demo.Entities.User(0, "CLIENTE");
         model.addAttribute( "categories", categoryService.listAllCategories());
         model.addAttribute("cities", cityService.listAllCities());
         model.addAttribute("username", this.username);
+        if(this.username != "not logged in"){
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = ((User)auth.getPrincipal()).getUsername();
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
+
         return "home";
     }
 
@@ -202,8 +211,8 @@ public class RestaurantController {
         if(restaurant.getComments().size() > 0){
             restaurant.setScore(restaurant.getScore()/restaurant.getComments().size());
         }
+        model.addAttribute("fot", fot);
         model.addAttribute("restaurant", restaurant);
-        model.addAttribute("fot",fot);
         model.addAttribute("user", userService.findByUsername(this.username));
         return "showRestaurant";
     }
@@ -223,6 +232,9 @@ public class RestaurantController {
 
     @RequestMapping("/ADMIN")
     String listADMIN(Model model) throws UnsupportedEncodingException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((User)auth.getPrincipal()).getUsername();
+        com.ucbcba.demo.Entities.User user = userService.findByUsername(username);
         byte[] bytes;
         String fot;
         List<Restaurant> restaurantIterable = (List<Restaurant>)restaurantService.listAllRestaurants();
@@ -230,9 +242,24 @@ public class RestaurantController {
             bytes = Base64.encode(restaurantIterable.get(i).getFoto());
             fot = new String(bytes,"UTF-8");
             restaurantIterable.get(i).setF(fot);
-
         }
         model.addAttribute("restaurants", restaurantService.listAllRestaurants());
         return "admin";
+    }
+
+    @RequestMapping("/profile/{id}")
+    public String perfil(@PathVariable Integer id, Model model) throws UnsupportedEncodingException {
+        com.ucbcba.demo.Entities.User user = userService.getUser(id);
+        if(user != null){
+            byte[] bytes;
+            String fot;
+            bytes = Base64.encode(user.getFoto());
+            fot = new String(bytes,"UTF-8");
+            model.addAttribute("fot",fot);
+
+            model.addAttribute("user", user);
+            return "showProfile";
+        }
+        return "redirect:/";
     }
 }

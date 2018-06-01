@@ -20,20 +20,27 @@
             <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
         </form>
         <br />
-        <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal" role="form">
-            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{username}" placeholder="Username" required="required"/> <label
-                th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                class="validation-message"></label>
+        <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal" role="form"
+              enctype="multipart/form-data">
+            <label>Email o username</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{username}" placeholder="Username" required="required"/>
             <br />
+            <label>Nombre</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" placeholder="Nombre" required="required"/>
+            <br />
+            <label>Telefono</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{telephone}" placeholder="Telefono" required="required"/>
+            <br />
+            <label>Password</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password" th:field="*{password}"
-                   placeholder="Password" required="required"/> <label
-                th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                class="validation-message"></label>
+                   placeholder="Password" required="required"/>
             <br />
+            <label>Confirma tu password</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password" th:field="*{passwordConfirm}"
-                   placeholder="passwordConfirm" required="required"/> <label
-                th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"
-                class="validation-message"></label>
+                   placeholder="passwordConfirm" required="required"/>
+            <br />
+            <label>Foto de perfil</label>
+            <input type="file" name="file" id="foto"/>
             <br />
             <button type="submit" class="btn btn-secondary btn-block"  style="color: #00002D; background-color: orange;" >Register User</button>
             <span th:utext="${successMessage}"></span>

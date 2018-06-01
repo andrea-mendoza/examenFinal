@@ -26,6 +26,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(Integer id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+        userRepository.delete(id);
+    }
+
+    @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -35,4 +45,6 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+
 }
