@@ -10,6 +10,49 @@
             color: orange;
         }
     </style>
+    <style>
+         div#gmap {
+        width: 80%;
+        height: 500px;
+        border:double;
+    }
+    </style>
+    <script type="text/javascript"  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCTuazTT4ftRrTOscHQYPabgJPLiBS9YXc">  </script>
+
+    <script   type="text/javascript">
+        var map;
+        function initialize() {
+
+
+            var myLatlng = new google.maps.LatLng(-17.371794,-66.143639);
+            var myOptions = {
+                zoom:16,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+            // marker refers to a global variable
+
+
+            google.maps.event.addListener(map, "click", function(event) {
+                // get lat/lon of click
+                var clickLat = event.latLng.lat();
+                var clickLon = event.latLng.lng();
+
+                // show in input box
+                document.getElementById("lat").value = clickLat.toFixed(5);
+                document.getElementById("lon").value = clickLon.toFixed(5);
+
+                  var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(clickLat,clickLon),
+                        map: map
+                     });
+            });
+    }
+
+     window.onload = function () { initialize() };
+    </script>
+
 </head>
 <body style="background-color: #00002D;">
 <form th:action="@{/ADMIN}" method="POST">
@@ -40,6 +83,10 @@
         </select>
         <br />
         <input type="file" name="file" id="foto"/>
+        <br/>
+        <input type="hidden" id="lat" th:field="*{latitude}" th:value="latitude"/>
+        <input type="hidden" id="lon" th:field="*{longitude}" th:value="longitude"/>
+        <div id="gmap"></div>
         <br/>
         <button class="btn btn-secondary" style="color: #00002D; background-color: orange;" type="submit" >Guardar cambios</button>
 

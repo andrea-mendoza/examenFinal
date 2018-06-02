@@ -15,24 +15,52 @@
             color: orange;
         }
     </style>
-    <script>
+    <style>
+       #map {
+         width: 80%;
+        height: 500px;
+        border:double;
+       }
+    </style>
+    <script type="text/javascript"  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCTuazTT4ftRrTOscHQYPabgJPLiBS9YXc">  </script>
 
+    <script  th:inline="javascript">
+      function loadMap() {
+        var latlng = new google.maps.LatLng([[${restaurant.latitude}]], [[${restaurant.longitude}]]);
+        var myOptions = {
+          zoom: 16,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"),myOptions);
+
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map,
+          title:"Restaurant"
+        });
+
+      }
     </script>
 </head>
-<body style="background-color: #00002D;">
-<form th:action="@{/restaurants}" method="POST">
-    <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
-</form>
+    <body style="background-color: #00002D;" onload="loadMap()">
+    <form th:action="@{/restaurants}" method="POST">
+        <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
+    </form>
     <div class="container">
         <div>
             <img class="info" th:src="@{'data:image/jpg;base64,' + ${fot} }" width="100%" height="400px"/>
         </div>
+        <br/>
+
+
         <div class="page-header">
             <h2><strong th:text="${restaurant.name}"></strong></h2>
         </div>
         <div>
                 <p>Ciudad: <span th:text="${restaurant.city.name}"></span></p>
                 <p>Direccion: <span th:text="${restaurant.direction}"></span></p>
+                <div id="map"></div>
                 <p>Telefono: <span th:text="${restaurant.phone}"></span></p>
                 <p>Categoria: <span th:text="${restaurant.category.name}"></span></p>
                 <p>Likes: <span th:text="${restaurant.likeRestaurants.size()}"></span></p>
