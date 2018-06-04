@@ -66,68 +66,69 @@ public class RestaurantController {
         return "home";
     }
 
-    @RequestMapping("/search/{id}")
-    String searchCategory(@PathVariable Integer id,Model model)throws UnsupportedEncodingException {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        this.username = (auth.getName() == "anonymousUser")?"not logged in":auth.getName();
-        if(username == "not logged in"){
-            model.addAttribute("actualRole", "CLIENTE");
-        }else{
-            model.addAttribute("actualRole", userService.findByUsername(username).getRole());
-        }
-        byte[] bytes;
-        String fot;
-        List<Restaurant> restaurantIterable = (List<Restaurant>)restaurantService.listAllRestaurants();
-        for(int i=0; i<restaurantIterable.size(); i++){
-            bytes = Base64.encode(restaurantIterable.get(i).getFoto());
-            fot = new String(bytes,"UTF-8");
-            restaurantIterable.get(i).setF(fot);
-        }
-
-        model.addAttribute( "categories", categoryService.listAllCategories());
-        Category categories = categoryService.getRestaurant(id);
-        List<Restaurant> restaurants = categories.getRestaurants();
-        model.addAttribute("restaurants",restaurants);
-        return "search";
-    }
-
     @RequestMapping("/search")
-    String searchByName(@RequestParam(value = "name", required = false, defaultValue = "") String name, @RequestParam(value = "id")Integer id, Model model)throws UnsupportedEncodingException {
-        model.addAttribute("cities", cityService.listAllCities());
+    String searchRestaurant(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                            @RequestParam(value = "categoria", required = false, defaultValue = "0") Integer categoria,
+                            @RequestParam(value = "ciudad", required = false, defaultValue = "0") Integer ciudad,
+                            Model model) throws UnsupportedEncodingException {
+
         auth = SecurityContextHolder.getContext().getAuthentication();
-        this.username = (auth.getName() == "anonymousUser")?"not logged in":auth.getName();
-        if(username == "not logged in"){
+        this.username = (auth.getName() == "anonymousUser") ? "not logged in" : auth.getName();
+        if (username == "not logged in") {
             model.addAttribute("actualRole", "CLIENTE");
-        }else{
+        } else {
             model.addAttribute("actualRole", userService.findByUsername(username).getRole());
         }
-
-
+        List<Restaurant> restaurants = new ArrayList<>();
+        if (!name.isEmpty()) {
+            if (categoria > 0) {
+                if (ciudad > 0) {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategory(name, ciudad, categoria);
+                } else {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategory(name, categoria);
+                }
+            } else {
+                if (ciudad > 0) {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCity(name, ciudad);
+                } else {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByName(name);
+                }
+            }
+        } else {
+            if (categoria > 0) {
+                if (ciudad > 0) {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategory(ciudad, categoria);
+                } else {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
+                }
+            } else {
+                if (ciudad > 0) {
+                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCity(ciudad);
+                } else {
+                    restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
+                }
+            }
+        }
         byte[] bytes;
         String fot;
-        if(name.equals("")){
-            City city = cityService.getCity(id);
-            List<Restaurant> restaurants = city.getRestaurants();
-            for(int i=0; i<restaurants.size(); i++){
-                bytes = Base64.encode(restaurants.get(i).getFoto());
-                fot = new String(bytes,"UTF-8");
-                restaurants.get(i).setF(fot);
-            }
-            model.addAttribute("restaurants",restaurants);
-            return "searchCity";
+        for (int i = 0; i < restaurants.size(); i++) {
+            bytes = Base64.encode(restaurants.get(i).getFoto());
+            fot = new String(bytes, "UTF-8");
+            restaurants.get(i).setF(fot);
         }
-        else{
-
-            List<Restaurant> restaurants1 = (List<Restaurant>)restaurantService.getRestaurantLikeName(name,id);
-            for(int i=0; i<restaurants1.size(); i++){
-                bytes = Base64.encode(restaurants1.get(i).getFoto());
-                fot = new String(bytes,"UTF-8");
-                restaurants1.get(i).setF(fot);
-            }
-            model.addAttribute("restaurants",restaurants1);
-            return "search";
+        List<Double> latitudes = new ArrayList<>();
+        List<Double> longitudes = new ArrayList<>();
+        for(int i=0; i<restaurants.size(); i++){
+            latitudes.add(restaurants.get(i).getLatitude());
+            latitudes.add(restaurants.get(i).getLongitude());
         }
-
+        model.addAttribute("restaurants", restaurants);
+        model.addAttribute("latitudes", latitudes);
+        model.addAttribute("longitudes", longitudes);
+        model.addAttribute("size", restaurants.size());
+        model.addAttribute("ciudades", cityService.listAllCities());
+        model.addAttribute("categorias", categoryService.listAllCategories());
+        return "restaurants";
     }
 
     @RequestMapping("/ADMIN/newRestaurant")
@@ -137,27 +138,7 @@ public class RestaurantController {
         model.addAttribute("cities", cityService.listAllCities());
         return "newRestaurant";
     }
-    @RequestMapping("/restaurants")
-    String list(Model model) throws UnsupportedEncodingException {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        this.username = (auth.getName() == "anonymousUser")?"not logged in":auth.getName();
-        if(username == "not logged in"){
-            model.addAttribute("actualRole", "CLIENTE");
-        }else{
-            model.addAttribute("actualRole", userService.findByUsername(username).getRole());
-        }
-        byte[] bytes;
-        String fot;
-        List<Restaurant> restaurantIterable = (List<Restaurant>)restaurantService.listAllRestaurants();
-        for(int i=0; i<restaurantIterable.size(); i++){
-            bytes = Base64.encode(restaurantIterable.get(i).getFoto());
-            fot = new String(bytes,"UTF-8");
-            restaurantIterable.get(i).setF(fot);
 
-        }
-        model.addAttribute("restaurants", restaurantService.listAllRestaurants());
-        return "restaurants";
-    }
     @RequestMapping("/ADMIN/deleteRestaurant/{id}")
     String delete(@PathVariable Integer id) {
         restaurantService.deleteRestaurant(id);

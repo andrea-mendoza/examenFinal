@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Restaurantes</title>
@@ -15,14 +15,77 @@
             color: orange;
         }
     </style>
+    <style>
+       #map {
+         width: 80%;
+        height: 500px;
+        border:double;
+       }
+    </style>
+    <script type="text/javascript"  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCTuazTT4ftRrTOscHQYPabgJPLiBS9YXc">  </script>
+
+    <script  th:inline="javascript">
+      function loadMap() {
+        var i = 0;
+        var tam = /*[[${size}]]*/ '0';
+        var latlng;
+        var myOptions;
+        var map;
+        var marker;
+        tam--;
+        console.log(tam);
+        latlng = new google.maps.LatLng([[${restaurants[0].latitude}]], [[${restaurants[0].longitude}]]);
+            myOptions = {
+              zoom: 16,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map"),myOptions);
+
+            marker = new google.maps.Marker({
+              position: latlng,
+              map: map,
+              title:"Restaurant"
+            });
+
+        while (tam >= 1 ){
+            function loadMap() {
+            var latlng = new google.maps.LatLng([[${restaurants[2].latitude}]], [[${restaurants[0].longitude}]]);
+
+            var marker = new google.maps.Marker({
+              position: latlng,
+              map: map,
+              title:"Restaurant"
+        });
+        }
+
+      }
+    </script>
 </head>
-<body style="background-color: #00002D;">
+<body style="background-color: #00002D;" onload="loadMap()">
 <form th:action="@{/}" method="POST">
     <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
 </form>
 <div class="container">
-    <button class="btn btn-secondary" style="color: #00002D; background-color: orange;"
-            onclick="window.location.href='/logout'">Cerrar sesion</button>
+    <form style="display:flex" action="/search" method="get">
+        <select id="ciudad" name="ciudad" style="width: 300px; color:orange" class="form-control" >
+            <option value="0">Todas las ciudades</option>
+            <option style="color:orange"
+                    th:each="city : ${ciudades}"
+                    th:value="${city.id}"
+                    th:text="${city.name}"></option>
+        </select>
+        <select id="categoria" name="categoria" style="width: 300px; color:orange" class="form-control" >
+            <option value="0">Todas las categorias</option>
+            <option style="color:orange"
+                    th:each="category : ${categorias}"
+                    th:value="${category.id}"
+                    th:text="${category.name}"></option>
+        </select>
+        <input class="form-control my-0 py-1" type="text" id ="name" name="name" placeholder="Search..." aria-label="Search" style="color:orange"/>
+        <input value = "Buscar" type="submit" class="btn btn-secondary" style="color:orange; background-color: rgba(1, 1, 36, 0.56);"/>
+    </form>
+    <div id="map"></div>
     <div class="media jumbotron" th:each="restaurant: ${restaurants}">
         <div class="media-body">
             <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
@@ -37,6 +100,7 @@
         </div>
         <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
     </div>
+
 </div>
 </body>
 </html>

@@ -42,12 +42,39 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public Iterable<Restaurant> getRestaurantLikeName(String name, Integer id) {
-        return restaurantRepository.getRestaurantLikeName(name, id);
+    public Iterable<Restaurant> getRestaurantLikeNameCityCategory(String name, Integer cityid, Integer categoryid) {
+        return restaurantRepository.getRestaurantLikeNameCityCategory(name,cityid,categoryid);
     }
 
     @Override
-    public Iterable<Restaurant> getByCity(City cityId) {
-        return restaurantRepository.getByCity(cityId);
+    public Iterable<Restaurant> getRestaurantLikeNameCity(String name, Integer cityid) {
+        return restaurantRepository.getRestaurantLikeNameCity(name,cityid);
     }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeNameCategory(String name, Integer categoryid) {
+        return restaurantRepository.getRestaurantLikeNameCategory(name,categoryid);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeCityCategory(Integer cityid, Integer categoryid) {
+        return restaurantRepository.getRestaurantLikeCityCategory(cityid,categoryid);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantByCity(Integer cityid) {
+        return restaurantRepository.getRestaurantByCity(cityid);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantByCategory(Integer categoryid) {
+        return restaurantRepository.getRestaurantByCategory(categoryid);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantByName(String name) {
+        return restaurantRepository.getRestaurantByName(name);
+    }
+
+
 }

@@ -14,7 +14,17 @@ public interface RestaurantService {
 
     void deleteRestaurant(Integer id);
 
-    Iterable<Restaurant> getRestaurantLikeName(String name, Integer id);
+    Iterable<Restaurant> getRestaurantLikeNameCityCategory(String name, Integer cityid, Integer categoryid);
 
-    Iterable<Restaurant> getByCity(City cityId);
+    Iterable<Restaurant> getRestaurantLikeNameCity(String name, Integer cityid);
+
+    Iterable<Restaurant> getRestaurantLikeNameCategory(String name, Integer categoryid);
+
+    Iterable<Restaurant> getRestaurantLikeCityCategory(Integer cityid,Integer categoryid);
+
+    Iterable<Restaurant> getRestaurantByCity(Integer cityid);
+
+    Iterable<Restaurant> getRestaurantByCategory(Integer categoryid);
+
+    Iterable<Restaurant> getRestaurantByName(String name);
 }

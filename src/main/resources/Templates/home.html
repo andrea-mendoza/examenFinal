@@ -42,7 +42,8 @@
                             <h1> TROFIMA </h1>
                             <div>
                                 <form style="display:flex" action="/search" method="get">
-                                <select id="id" name="id" style="width: 300px; color:orange" class="form-control" >
+                                <select id="ciudad" name="ciudad" style="width: 300px; color:orange" class="form-control" >
+                                    <option value="0">Todas las ciudades</option>
                                     <option style="color:orange"
                                             th:each="city : ${cities}"
                                             th:value="${city.id}"
@@ -54,7 +55,7 @@
                             </div>
                         </div>
                         <td th:each="category : ${categories}" method="get">
-                            <a th:href="${'/search/' + category.id}" th:text="${category.name}" class="btn btn-secondary"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"></a>
+                            <a th:href="${'/search'}" id="categoria" name="categoria" th:text="${category.name}" class="btn btn-secondary"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"></a>
                         </td>
                     </div>
                 </div>
