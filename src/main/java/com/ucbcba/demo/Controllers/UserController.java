@@ -5,10 +5,7 @@ import com.ucbcba.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -48,5 +45,28 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         return "login";
+    }
+
+    @RequestMapping("/editProfile/{id}")
+    String editRestaurant(@PathVariable Integer id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "editPerfil";
+    }
+
+    @RequestMapping(value = "/registration2", method = RequestMethod.POST)
+    public String registration2(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files) throws IOException {
+        byte[] f;
+        User us = userService.getUser(user.getId());
+        if(!files.isEmpty()){
+            f = files.getBytes();
+            user.setFoto(f);
+        }else{
+
+            user.setFoto(us.getFoto());
+        }
+        user.setPassword(user.getPasswordConfirm());
+        user.setPasswordConfirm(user.getPasswordConfirm());
+        userService.save(user);
+        return "redirect:/profile/" + user.getId();
     }
 }

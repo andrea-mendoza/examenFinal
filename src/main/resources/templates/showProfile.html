@@ -20,7 +20,7 @@
     </script>
 </head>
 <body style="background-color: #00002D;">
-<form th:action="@{/restaurants}" method="POST">
+<form th:action="@{/}" method="POST">
     <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
 </form>
 <div class="container">
@@ -33,6 +33,13 @@
     <div>
         <p>Nombre: <span th:text="${user.name}"></span></p>
         <p>Telefono: <span th:text="${user.telephone}"></span></p>
+        <p>Descripcion: <span th:text="${user.descripcion}"></span></p>
+        <p>Intereses: <span th:text="${user.intereses}"></span></p>
+        <p>Aficiones: <span th:text="${user.aficiones}"></span></p>
+
+        <form th:action="${'/editProfile/' + user.id}" method="POST">
+            <button class="btn btn-secondary" style="color: #00002D; background-color: orange;">Editar perfil</button>
+        </form>
 
     </div>
 </div>
