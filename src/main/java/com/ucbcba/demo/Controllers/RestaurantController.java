@@ -122,7 +122,7 @@ public class RestaurantController {
             latitudes.add(restaurants.get(i).getLatitude());
             longitudes.add(restaurants.get(i).getLongitude());
         }
-
+        model.addAttribute("searchText", name);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
         model.addAttribute("longitudes", longitudes);
