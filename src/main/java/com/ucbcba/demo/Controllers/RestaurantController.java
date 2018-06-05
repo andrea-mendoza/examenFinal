@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -109,6 +110,19 @@ public class RestaurantController {
                 }
             }
         }
+
+        // ordena los restaurantes por score
+
+        for(int j=0;j<restaurants.size();j++){
+            restaurants.get(j).setScore(0);
+            for(int i=0;i<restaurants.get(j).getComments().size();i++){
+                (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
+            }
+        }
+        restaurants.sort((s1, s2) -> s1.getScore().compareTo(s2.getScore()));
+        Collections.reverse(restaurants);
+
+
         byte[] bytes;
         String fot;
         List<Double> latitudes = new ArrayList<>();
