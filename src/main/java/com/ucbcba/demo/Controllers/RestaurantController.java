@@ -242,4 +242,21 @@ public class RestaurantController {
         }
         return "redirect:/";
     }
+    @RequestMapping("/ranking")
+    public String ranking(Model model) throws UnsupportedEncodingException {
+        List<Restaurant> restaurants = (List<Restaurant>)restaurantService.listGeneralRanking();
+        byte[] bytes;
+        String fot;
+        List<Double> latitudes = new ArrayList<>();
+        List<Double> longitudes = new ArrayList<>();
+        for (int i = 0; i < restaurants.size(); i++) {
+            bytes = Base64.encode(restaurants.get(i).getFoto());
+            fot = new String(bytes, "UTF-8");
+            restaurants.get(i).setF(fot);
+            latitudes.add(restaurants.get(i).getLatitude());
+            longitudes.add(restaurants.get(i).getLongitude());
+        }
+        model.addAttribute("restaurants", restaurants);
+        return "ranking";
+    }
 }

@@ -27,4 +27,6 @@ public interface RestaurantService {
     Iterable<Restaurant> getRestaurantByCategory(Integer categoryid);
 
     Iterable<Restaurant> getRestaurantByName(String name);
+
+    Iterable<Restaurant> listGeneralRanking();
 }

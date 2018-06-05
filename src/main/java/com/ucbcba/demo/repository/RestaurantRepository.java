@@ -3,6 +3,7 @@ package com.ucbcba.demo.repository;
 import com.ucbcba.demo.Entities.Category;
 import com.ucbcba.demo.Entities.City;
 import com.ucbcba.demo.Entities.Restaurant;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +33,6 @@ public interface RestaurantRepository extends CrudRepository<Restaurant,Integer>
 
     @Query("SELECT r from Restaurant r where r.name LIKE %:name%")
     Iterable<Restaurant> getRestaurantByName(@Param("name") String name);
+
+    public Iterable<Restaurant> findTop5ByOrderByScoreDesc();
 }

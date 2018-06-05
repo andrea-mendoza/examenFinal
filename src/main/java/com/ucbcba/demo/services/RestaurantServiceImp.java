@@ -76,5 +76,9 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurantRepository.getRestaurantByName(name);
     }
 
+    @Override
+    public Iterable<Restaurant> listGeneralRanking(){
+        return restaurantRepository.findTop5ByOrderByScoreDesc();
+    }
 
 }
