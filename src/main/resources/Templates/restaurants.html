@@ -28,44 +28,31 @@
 
       function loadMap() {
         var tam = /*[[${size}]]*/ '0';
-        tam--;
+        var i = 0;
+        var lats = /*[[${latitudes}]]*/ '[]';
+        var lons = /*[[${longitudes}]]*/ '[]';
 
-        if(tam >= 0){
-            var latlng = new google.maps.LatLng([[${restaurants[0].latitude}]], [[${restaurants[0].longitude}]]);
-            var myOptions = {
-              zoom: 16,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(document.getElementById("map"),myOptions);
-
-            var marker = new google.maps.Marker({
-              position: latlng,
-              map: map,
-              title:"Restaurant"
-            });
-        }
-
-
-        while(tam >= 0){
+        while(tam > i){
             console.log(tam);
-            var lats = /*[[${latitudes}]]*/ '[]';
-            var lons = /*[[${longitudes}]]*/ '[]';
-            console.log(lats[tam]);
-            console.log(lons[tam]);
-            var latlng = new google.maps.LatLng(lats[tam],lons[tam]);
+            console.log(lats[i]);
+            console.log(lons[i]);
+            var latlng = new google.maps.LatLng(lats[i],lons[i]);
             var myOptions = {
               zoom: 16,
               center: latlng,
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
+            if(i == 0){
+                var map = new google.maps.Map(document.getElementById("map"),myOptions);
+            }
+
             var marker = new google.maps.Marker({
               position: latlng,
               map: map,
               title:"Restaurant"
             });
-            tam--;
+            i++;
         }
       }
 
