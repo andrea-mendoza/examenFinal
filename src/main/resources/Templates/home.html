@@ -60,6 +60,7 @@
                         <td th:each="category : ${categories}" method="get">
                             <a th:href="${'/search'}" id="categoria" name="categoria" th:text="${category.name}" class="btn btn-secondary"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"></a>
                         </td>
+                        <a class="btn btn-secondary"  th:href="${'/rankingCategorias'}"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"> Ranking Categorias</a>
                     </div>
                 </div>
             </div>

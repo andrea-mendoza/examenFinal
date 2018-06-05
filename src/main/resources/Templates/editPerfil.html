@@ -29,7 +29,7 @@
         <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" th:value="${user.name}" placeholder="Nombre" required="required" maxlength="50"/>
         <br />
         <label>Telefono</label>
-        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{telephone}" th:value="${user.telephone}" placeholder="Telefono" required="required" min="4000000" max="79999999"/>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="number" th:field="*{telephone}" th:value="${user.telephone}" placeholder="Telefono" required="required" min="4000000" max="79999999"/>
         <br />
         <label>Da una descripcion de ti</label>
         <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{descripcion}" th:value="${user.descripcion}" placeholder="Descripcion personal" maxlength="255"/>
