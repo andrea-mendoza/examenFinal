@@ -111,17 +111,16 @@ public class RestaurantController {
         }
         byte[] bytes;
         String fot;
+        List<Double> latitudes = new ArrayList<>();
+        List<Double> longitudes = new ArrayList<>();
         for (int i = 0; i < restaurants.size(); i++) {
             bytes = Base64.encode(restaurants.get(i).getFoto());
             fot = new String(bytes, "UTF-8");
             restaurants.get(i).setF(fot);
-        }
-        List<Double> latitudes = new ArrayList<>();
-        List<Double> longitudes = new ArrayList<>();
-        for(int i=0; i<restaurants.size(); i++){
             latitudes.add(restaurants.get(i).getLatitude());
-            latitudes.add(restaurants.get(i).getLongitude());
+            longitudes.add(restaurants.get(i).getLongitude());
         }
+
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
         model.addAttribute("longitudes", longitudes);
