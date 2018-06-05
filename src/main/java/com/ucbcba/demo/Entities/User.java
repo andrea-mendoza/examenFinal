@@ -20,9 +20,11 @@ public class User {
     private Integer telephone;
     @Lob
     @Column(columnDefinition="longblob")
-    private byte[] foto = new byte[] { (byte)0xe0, 0x4f, (byte)0xd0,
-            0x20, (byte)0xea, 0x3a, 0x69, 0x10, (byte)0xa2, (byte)0xd8, 0x08, 0x00, 0x2b,
-            0x30, 0x30, (byte)0x9d };
+    private byte[] foto;
+
+    private String intereses = "";
+    private String descripcion = "";
+    private String aficiones = "";
 
     private String f;
 
@@ -82,11 +84,39 @@ public class User {
 
     public void setTelephone(Integer telephone) { this.telephone = telephone; }
 
-    public byte[] getFoto() { return foto; }
-
-    public void setFoto(byte[] foto) { this.foto = foto; }
-
     public String getF() { return f; }
 
     public void setF(String f) { this.f = f; }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public String getIntereses() {
+        return intereses;
+    }
+
+    public void setIntereses(String intereses) {
+        this.intereses = intereses;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getAficiones() {
+        return aficiones;
+    }
+
+    public void setAficiones(String aficiones) {
+        this.aficiones = aficiones;
+    }
 }

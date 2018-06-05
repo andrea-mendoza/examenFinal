@@ -10,6 +10,16 @@
             color: orange;
         }
     </style>
+    <script>
+	function validateForm() {
+		var x = document.forms["myForm"]["password"].value;
+		var y = document.forms["myForm"]["passwordConfirm"].value;
+		if (x != y) {
+			alert("Password no coincide!");
+			return false;
+		}
+	}
+</script>
 </head>
 <body>
     <div class="container">
@@ -20,30 +30,38 @@
             <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
         </form>
         <br />
-        <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal" role="form"
-              enctype="multipart/form-data">
+        <form name="myForm" autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal" role="form"
+              enctype="multipart/form-data" onsubmit="return validateForm()">
             <label>Email o username</label>
-            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{username}" placeholder="Username" required="required"/>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="email" th:field="*{username}" placeholder="Username" required="required" maxlength="50"/>
             <br />
             <label>Nombre</label>
-            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" placeholder="Nombre" required="required"/>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" placeholder="Nombre" required="required" maxlength="50"/>
             <br />
             <label>Telefono</label>
-            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{telephone}" placeholder="Telefono" required="required"/>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{telephone}" placeholder="Telefono" required="required" min="4000000" max="79999999"/>
+            <br />
+            <label>Da una descripcion de ti</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{descripcion}" placeholder="Descripcion personal" maxlength="255"/>
+            <br />
+            <label>Intereses</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{intereses}" placeholder="Intereses" maxlength="255"/>
+            <br />
+            <label>Aficiones</label>
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{aficiones}" placeholder="Aficiones" maxlength="255"/>
             <br />
             <label>Password</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password" th:field="*{password}"
-                   placeholder="Password" required="required"/>
+                   placeholder="Password" required="required" maxlength="50"/>
             <br />
             <label>Confirma tu password</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password" th:field="*{passwordConfirm}"
-                   placeholder="passwordConfirm" required="required"/>
+                   placeholder="passwordConfirm" required="required" maxlength="50"/>
             <br />
             <label>Foto de perfil</label>
             <input type="file" name="file" id="foto"/>
             <br />
             <button type="submit" class="btn btn-secondary btn-block"  style="color: #00002D; background-color: orange;" >Register User</button>
-            <span th:utext="${successMessage}"></span>
         </form>
     </div>
 </body>

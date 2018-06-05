@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <style>
+        .container{
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+<form th:action="${'/profile/' + user.id}" method="POST">
+    <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
+</form>
+<div class="container">
+    <div class="page-header">
+        <h2><strong>Editar perfil</strong></h2>
+    </div>
+
+    <br />
+    <form name="myForm" autocomplete="off" action="#" th:action="@{/registration2}" th:object="${user}" method="post" class="form-horizontal" role="form"
+          enctype="multipart/form-data" onsubmit="return validateForm()">
+        <input type="hidden" th:field="*{id}" th:value="${user.id}"/>
+        <input type="hidden" th:field="*{username}" th:value="${user.username}"/>
+        <label>Nombre</label>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" th:value="${user.name}" placeholder="Nombre" required="required" maxlength="50"/>
+        <br />
+        <label>Telefono</label>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{telephone}" th:value="${user.telephone}" placeholder="Telefono" required="required" min="4000000" max="79999999"/>
+        <br />
+        <label>Da una descripcion de ti</label>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{descripcion}" th:value="${user.descripcion}" placeholder="Descripcion personal" maxlength="255"/>
+        <br />
+        <label>Intereses</label>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{intereses}" th:value="${user.intereses}" placeholder="Intereses" maxlength="255"/>
+        <br />
+        <label>Aficiones</label>
+        <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{aficiones}" th:value="${user.aficiones}" placeholder="Aficiones" maxlength="255"/>
+        <br />
+        <label>Cambiar foto de perfil</label>
+        <input type="file" name="file" id="foto"/>
+        <input type="hidden" th:field="*{password}" th:value="${user.passwordConfirm}"/>
+        <input type="hidden" th:field="*{passwordConfirm}" th:value="${user.passwordConfirm}"/>
+        <br />
+        <button type="submit" class="btn btn-secondary btn-block"  style="color: #00002D; background-color: orange;" >Guardar cambios</button>
+    </form>
+</div>
+</body>
+</html>
