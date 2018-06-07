@@ -111,18 +111,6 @@ public class RestaurantController {
             }
         }
 
-        // ordena los restaurantes por score
-
-        for(int j=0;j<restaurants.size();j++){
-            restaurants.get(j).setScore(0);
-            for(int i=0;i<restaurants.get(j).getComments().size();i++){
-                (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
-            }
-        }
-        restaurants.sort((s1, s2) -> s1.getScore().compareTo(s2.getScore()));
-        Collections.reverse(restaurants);
-
-
         byte[] bytes;
         String fot;
         List<Double> latitudes = new ArrayList<>();
@@ -276,4 +264,40 @@ public class RestaurantController {
         model.addAttribute("restaurants", restaurants);
         return "ranking";
     }
+
+    @RequestMapping("/rankingCategorias")
+    public String ranking(@RequestParam(value = "categoria", required = false, defaultValue = "0") Integer categoria,Model model) throws UnsupportedEncodingException {
+        List<Restaurant> restaurants;
+        byte[] bytes;
+        String fot;
+
+        if(categoria == 0){
+            restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
+        }
+        else{
+            restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
+        }
+
+        for(int j=0;j<restaurants.size();j++){
+            restaurants.get(j).setScore(0);
+            for(int i=0;i<restaurants.get(j).getComments().size();i++){
+                (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
+            }
+        }
+
+        restaurants.sort((s1, s2) -> s1.getScore().compareTo(s2.getScore()));
+        Collections.reverse(restaurants);
+
+        for (int i = 0; i < restaurants.size(); i++) {
+            bytes = Base64.encode(restaurants.get(i).getFoto());
+            fot = new String(bytes, "UTF-8");
+            restaurants.get(i).setF(fot);
+        }
+
+        model.addAttribute("categorias", categoryService.listAllCategories());
+        model.addAttribute("restaurants", restaurants);
+        return "rankingCategorias";
+    }
+
+
 }
