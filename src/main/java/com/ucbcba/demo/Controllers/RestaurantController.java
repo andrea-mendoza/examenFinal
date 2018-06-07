@@ -127,17 +127,20 @@ public class RestaurantController {
         String fot;
         List<Double> latitudes = new ArrayList<>();
         List<Double> longitudes = new ArrayList<>();
+        List<String> titulos = new ArrayList<>();
         for (int i = 0; i < restaurants.size(); i++) {
             bytes = Base64.encode(restaurants.get(i).getFoto());
             fot = new String(bytes, "UTF-8");
             restaurants.get(i).setF(fot);
             latitudes.add(restaurants.get(i).getLatitude());
             longitudes.add(restaurants.get(i).getLongitude());
+            titulos.add(restaurants.get(i).getName());
         }
         model.addAttribute("searchText", name);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
         model.addAttribute("longitudes", longitudes);
+        model.addAttribute("titulos", titulos);
         model.addAttribute("size", restaurants.size());
         model.addAttribute("ciudades", cityService.listAllCities());
         model.addAttribute("categorias", categoryService.listAllCategories());

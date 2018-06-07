@@ -3,8 +3,18 @@
 <head  lang="es">
     <title> Home </title>
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet"/>
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <script>
+    $( document ).ready(function() {
+        $("#sendCategory").on('click', function(){
+            $("#categoryForm").submit();
+        });
+        console.log("asd");
+    });
+    </script>
 </head>
 <body>
 <header>
@@ -58,7 +68,10 @@
                             </div>
                         </div>
                         <td th:each="category : ${categories}" method="get">
-                            <a th:href="${'/search'}" id="categoria" name="categoria" th:text="${category.name}" class="btn btn-secondary"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"></a>
+                            <form id="categoryForm" th:action="@{/search}" method="get">
+                                <input type="hidden" th:value="${category.id}" id="categoria" name="categoria"/>
+                                <a id="sendCategory" href="#" th:text="${category.name}" class="btn btn-secondary"  style="margin: 0px; color:orange; background-color: rgba(1, 1, 36, 0.56);"></a>
+                            </form>
                         </td>
                     </div>
                 </div>
