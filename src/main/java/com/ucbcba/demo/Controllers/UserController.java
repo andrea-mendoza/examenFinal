@@ -1,6 +1,7 @@
 package com.ucbcba.demo.Controllers;
 
 import com.ucbcba.demo.Entities.User;
+import com.ucbcba.demo.services.CityService;
 import com.ucbcba.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,14 @@ import java.io.IOException;
 
 @Controller
 public class UserController {
+    private CityService cityService;
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    public void setCityService(CityService cityService){
+        this.cityService = cityService;
+    }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationInit(Model model) {
         model.addAttribute("user", new User());
@@ -23,7 +28,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files) throws IOException {
+    public String registration(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files, Model model) throws IOException {
         byte[] f;
         if(!files.isEmpty()){
             f = files.getBytes();
@@ -38,6 +43,7 @@ public class UserController {
             }
             user.setFoto(data);
         }
+        model.addAttribute("cities", cityService.listAllCities());
         userService.save(user);
         return "redirect:/";
     }
@@ -54,7 +60,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration2", method = RequestMethod.POST)
-    public String registration2(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files) throws IOException {
+    public String registration2(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files,Model model) throws IOException {
         byte[] f;
         User us = userService.getUser(user.getId());
         if(!files.isEmpty()){
@@ -66,6 +72,7 @@ public class UserController {
         }
         user.setPassword(user.getPasswordConfirm());
         user.setPasswordConfirm(user.getPasswordConfirm());
+        model.addAttribute("cities", cityService.listAllCities());
         userService.save(user);
         return "redirect:/profile/" + user.getId();
     }

@@ -38,6 +38,10 @@
             <label>Nombre</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" th:field="*{name}" placeholder="Nombre" required="required" maxlength="50"/>
             <br />
+            <label>Ciudad</label>
+            <select class="form-control" style="width: 250px; color: orange;" th:field="*{city}">
+                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+            </select>
             <label>Telefono</label>
             <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="number" th:field="*{telephone}" placeholder="Telefono" required="required" min="4000000" max="79999999"/>
             <br />
