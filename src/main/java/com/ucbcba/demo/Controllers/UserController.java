@@ -24,11 +24,12 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationInit(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("cities", cityService.listAllCities());
         return "register";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files, Model model) throws IOException {
+    public String registration(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files) throws IOException {
         byte[] f;
         if(!files.isEmpty()){
             f = files.getBytes();
@@ -43,7 +44,6 @@ public class UserController {
             }
             user.setFoto(data);
         }
-        model.addAttribute("cities", cityService.listAllCities());
         userService.save(user);
         return "redirect:/";
     }
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration2", method = RequestMethod.POST)
-    public String registration2(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files,Model model) throws IOException {
+    public String registration2(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile files) throws IOException {
         byte[] f;
         User us = userService.getUser(user.getId());
         if(!files.isEmpty()){
@@ -72,7 +72,6 @@ public class UserController {
         }
         user.setPassword(user.getPasswordConfirm());
         user.setPasswordConfirm(user.getPasswordConfirm());
-        model.addAttribute("cities", cityService.listAllCities());
         userService.save(user);
         return "redirect:/profile/" + user.getId();
     }
