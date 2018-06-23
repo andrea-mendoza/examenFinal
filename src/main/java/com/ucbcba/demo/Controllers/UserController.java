@@ -1,6 +1,7 @@
 package com.ucbcba.demo.Controllers;
 
 import com.ucbcba.demo.Entities.User;
+import com.ucbcba.demo.services.CityService;
 import com.ucbcba.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,18 @@ import java.io.IOException;
 
 @Controller
 public class UserController {
+    private CityService cityService;
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    public void setCityService(CityService cityService){
+        this.cityService = cityService;
+    }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationInit(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("cities", cityService.listAllCities());
         return "register";
     }
 

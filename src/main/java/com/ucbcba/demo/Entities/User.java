@@ -12,6 +12,10 @@ public class User {
     @NotNull
     private String username = "";
 
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
     private String role = "CLIENTE";
     private String password;
     private String passwordConfirm;
@@ -118,5 +122,13 @@ public class User {
 
     public void setAficiones(String aficiones) {
         this.aficiones = aficiones;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
