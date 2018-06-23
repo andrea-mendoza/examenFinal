@@ -61,11 +61,11 @@ public class UserController {
             f = files.getBytes();
             user.setFoto(f);
         }else{
-
             user.setFoto(us.getFoto());
         }
         user.setPassword(user.getPasswordConfirm());
         user.setPasswordConfirm(user.getPasswordConfirm());
+        user.setRole(us.getRole());
         userService.save(user);
         return "redirect:/profile/" + user.getId();
     }
