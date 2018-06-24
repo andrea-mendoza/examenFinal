@@ -42,8 +42,41 @@
 
       }
     </script>
+    <script th:inline="javascript">
+    function ratingStars(){
+
+            var yellow =/*[[${restaurant.score}]]*/ '0';
+
+
+            for (var gray = (5 - yellow); gray >= 1; gray--)
+            {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:gray; font-size:120%;";
+              document.getElementById("rating").appendChild(star);
+            }
+             if ((yellow*2) % 2 != 0) {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:gray; font-size:120%;";
+              document.getElementById("rating").appendChild(star);
+              var star1 = document.createElement("label");
+              star1.className = "half";
+              star1.style= "color:yellow; font-size:120%;";
+              document.getElementById("rating").appendChild(star1);
+            }
+            for ( ; yellow >= 1; yellow--)
+            {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:yellow; font-size:120%;";
+              document.getElementById("rating").appendChild(star);
+            }
+
+        }
+    </script>
 </head>
-    <body onload="loadMap()">
+    <body onload="loadMap(); ratingStars()">
     <h5><a href="javascript:history.back()">Volver</a></h5>
     <div class="container">
         <div>
@@ -62,11 +95,9 @@
                 <p>Telefono: <span th:text="${restaurant.phone}"></span></p>
                 <p>Categoria: <span th:text="${restaurant.category.name}"></span></p>
                 <p>Likes: <span th:text="${restaurant.likeRestaurants.size()}"></span></p>
-                <b>Ranking:</b>
-                <div style="display: flex;" th:if="${restaurant.score > 0}">
-                    <fieldset  class="rating" th:each="stars:${#numbers.sequence(1,{restaurant.score})}" >
-                        <label  style="color:yellow; font-size:120%;" ></label>
-                    </fieldset>
+                <p>Ranking:</p>
+                <div style="display: flex;" >
+                    <fieldset  class="rating" id="rating"> </fieldset>
                 </div>
                 <form th:action="@{/restaurant/like}" method="POST" style="align: left">
                     <input type="hidden" name="restaurant" th:value="${restaurant.id}"/>
