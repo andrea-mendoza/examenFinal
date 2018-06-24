@@ -30,7 +30,7 @@ public class Comment {
 
     //@Column(columnDefinition = "Date default 0")
     private Date creationDate = new Date();
-    private Integer score;
+    private Float score= Float.valueOf(0);
 
     public Integer getId() {
         return id;
@@ -80,11 +80,11 @@ public class Comment {
         this.restaurant = restaurant;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

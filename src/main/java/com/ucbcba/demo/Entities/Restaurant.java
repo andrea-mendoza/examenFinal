@@ -13,7 +13,7 @@ public class Restaurant {
     private Integer id;
 
     @NotNull
-    private Integer score = 0;
+    private Float score = Float.valueOf(0);
 
     @NotNull
     private String name;
@@ -59,11 +59,11 @@ public class Restaurant {
         this.id = id;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 

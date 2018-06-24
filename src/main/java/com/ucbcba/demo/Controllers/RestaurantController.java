@@ -197,12 +197,13 @@ public class RestaurantController {
         bytes = Base64.encode(restaurant.getFoto());
         fot = new String(bytes,"UTF-8");
 
-        restaurant.setScore(0);
+        restaurant.setScore((float) 0);
         for(int i=0;i<restaurant.getComments().size();i++){
             restaurant.setScore(restaurant.getScore() + (restaurant.getComments().get(i).getScore()));
         }
         if(restaurant.getComments().size() > 0){
             restaurant.setScore(restaurant.getScore()/restaurant.getComments().size());
+            restaurant.setScore((float) (Math.round(restaurant.getScore()/0.5)*0.5));
         }
         model.addAttribute("fot", fot);
         model.addAttribute("restaurant", restaurant);
@@ -287,7 +288,7 @@ public class RestaurantController {
         }
 
         for(int j=0;j<restaurants.size();j++){
-            restaurants.get(j).setScore(0);
+            restaurants.get(j).setScore((float) 0);
             for(int i=0;i<restaurants.get(j).getComments().size();i++){
                 (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
             }
