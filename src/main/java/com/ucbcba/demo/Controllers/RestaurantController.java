@@ -50,7 +50,7 @@ public class RestaurantController {
 
 
     @RequestMapping("/")
-    String home(Model model) {
+    String home(Model model) throws UnsupportedEncodingException {
         auth = SecurityContextHolder.getContext().getAuthentication();
         this.username = (auth.getName() == "anonymousUser")?"not logged in":auth.getName();
         com.ucbcba.demo.Entities.User user = new com.ucbcba.demo.Entities.User(0, "CLIENTE");
@@ -61,6 +61,15 @@ public class RestaurantController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = ((User)auth.getPrincipal()).getUsername();
             user = userService.findByUsername(username);
+            List<Restaurant> restaurants = (List<Restaurant>)restaurantService.getRestaurantByCity(user.getCity().getId());
+            byte[] bytes;
+            String fot;
+            for (int i = 0; i < restaurants.size(); i++) {
+                bytes = Base64.encode(restaurants.get(i).getFoto());
+                fot = new String(bytes, "UTF-8");
+                restaurants.get(i).setF(fot);
+            }
+            model.addAttribute("restaurants", restaurants);
         }
         model.addAttribute("user", user);
 
@@ -124,7 +133,6 @@ public class RestaurantController {
             longitudes.add(restaurants.get(i).getLongitude());
             titulos.add(restaurants.get(i).getName());
         }
-        model.addAttribute("searchText", name);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
         model.addAttribute("longitudes", longitudes);

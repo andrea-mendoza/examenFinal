@@ -12,23 +12,24 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h2><strong>Iniciar sesion </strong></h2>
-        </div>
-        <div class="container">
-            <form th:action="@{/registration}" method="get">
-                <button class="btn btn-md btn-warning btn-block" type="Submit">Registrarme</button>
-            </form>
-        </div>
-        <br />
-        <div class="container">
-            <form th:action="@{/login}" method="POST" class="form-signin">
-                <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" id="username" name="username"  th:placeholder="username"/><br />
-                <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password"  th:placeholder="Password" id="password" name="password" /><br />
-                <button class="btn btn-block" style="color: #00002D; background-color: orange;" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-            </form>
-        </div>
+<h5><a href="javascript:history.back()">Volver</a></h5>
+<div class="container">
+    <div class="page-header">
+        <h2><strong>Iniciar sesion </strong></h2>
     </div>
+    <div class="container">
+        <form th:action="@{/registration}" method="get">
+            <button class="btn btn-md btn-warning btn-block" type="Submit">Registrarme</button>
+        </form>
+    </div>
+    <br />
+    <div class="container">
+        <form th:action="@{/login}" method="POST" class="form-signin">
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="text" id="username" name="username"  th:placeholder="username"/><br />
+            <input class="form-control my-0 py-1" style="min-width: 100%; color: orange;" type="password"  th:placeholder="Password" id="password" name="password" /><br />
+            <button class="btn btn-md btn-warning btn-block" type="Submit">Iniciar sesion</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

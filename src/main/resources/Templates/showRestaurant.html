@@ -43,10 +43,8 @@
       }
     </script>
 </head>
-    <body style="background-color: #00002D;" onload="loadMap()">
-    <form th:action="@{/search}" method="POST">
-        <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
-    </form>
+    <body onload="loadMap()">
+    <h5><a href="javascript:history.back()">Volver</a></h5>
     <div class="container">
         <div>
             <img class="info" th:src="@{'data:image/jpg;base64,' + ${fot} }" width="100%" height="400px"/>

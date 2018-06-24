@@ -2,11 +2,24 @@
 <html  xmlns:th="http://www.thymeleaf.org">
 <head  lang="es">
     <title> Home </title>
+    <meta charset="UTF-8"/>
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet"/>
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"/>
+    <style>
+        .container{
+            color: orange;
+        }
+        .jumbotron{
+            background-color: #012438;
+            color: orange;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -19,12 +32,11 @@
                         <ul class="nav navbar-nav navbar-left">
                             <li th:if="${username!='not logged in'}"><a href="/logout"> Cerrar Sesion </a></li>
                             <li th:if="${user.role=='ADMIN'}"><a href="/ADMIN"> ADMINISTRADOR </a></li>
-                            <li th:if="${username=='not logged in'}"><a href="/registration"> Registrar </a></li>
+                            <li th:if="${username=='not logged in'}"><a href="/registration"> Registrarse </a></li>
                             <li th:if="${username=='not logged in'}"><a href="/login"> Iniciar Sesion </a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li th:if="${username!='not logged in'}"><a th:href="${'/profile/' + user.id}"> Perfil </a></li>
-                            <li><p th:text="${username}"></p></li>
+                            <li th:if="${username!='not logged in'}"><a th:href="${'/profile/' + user.id}" th:text="${username}"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -74,6 +86,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section th:if="${username!='not logged in'} and ${user.role!='ADMIN'}">
+    <h4 class="media-heading" style="text-align:center;">Restaurantes en tu ciudad </h4>
+    <div class="container">
+        <div class="media jumbotron" th:each="restaurant: ${restaurants}">
+            <div class="media-body">
+                <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+                <h4 class="media-heading" th:text="${restaurant.name}"></h4>
+                <p th:text="${restaurant.category.name}"></p>
+                <p th:text="${restaurant.city.name}"></p>
+                <div th:if="${restaurant.score > 0}">
+                    <fieldset  class="rating" th:each="stars:${#numbers.sequence(1,{restaurant.score})}" >
+                        <label  style="color:yellow; font-size:120%;" ></label>
+                    </fieldset>
+                </div>
+            </div>
+            <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
         </div>
     </div>
 </section>

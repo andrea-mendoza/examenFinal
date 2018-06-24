@@ -59,10 +59,8 @@
 
     </script>
 </head>
-<body style="background-color: #00002D;" onload="loadMap()">
-<form th:action="@{/}" method="POST">
-    <button class="btn btn-secondary" style="color:orange; background-color: #00002D; border:none;" type="submit"><span class="glyphicon glyphicon-circle-arrow-left"></span></button>
-</form>
+<body onload="loadMap()">
+<h5><a href="javascript:history.back()">Volver</a></h5>
 <div class="container">
     <form style="display:flex" action="/search" method="get">
         <select id="ciudad" name="ciudad" style="width: 300px; color:orange" class="form-control" >
@@ -97,7 +95,6 @@
         </div>
         <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
     </div>
-
 </div>
 </body>
 </html>
