@@ -5,9 +5,9 @@ import com.ucbcba.demo.Entities.Category;
 public interface CategoryService {
     Iterable<Category> listAllCategories();
 
-    void saveRestaurant(Category category);
+    void saveCategory(Category category);
 
-    Category getRestaurant(Integer id);
+    Category getCategory(Integer id);
 
-    void deleteRestaurant(Integer id);
+    void deleteCategory(Integer id);
 }

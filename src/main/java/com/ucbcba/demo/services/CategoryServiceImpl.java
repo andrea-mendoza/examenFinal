@@ -21,17 +21,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void saveRestaurant(Category category) {
+    public void saveCategory(Category category) {
         categoryRepository.save(category);
     }
 
     @Override
-    public Category getRestaurant(Integer id) {
+    public Category getCategory(Integer id) {
         return categoryRepository.findOne(id);
     }
 
     @Override
-    public void deleteRestaurant(Integer id) {
+    public void deleteCategory(Integer id) {
         categoryRepository.delete(id);
     }
 }

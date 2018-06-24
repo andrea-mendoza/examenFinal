@@ -140,6 +140,15 @@ public class RestaurantController {
         model.addAttribute("size", restaurants.size());
         model.addAttribute("ciudades", cityService.listAllCities());
         model.addAttribute("categorias", categoryService.listAllCategories());
+        if(ciudad==0)
+            model.addAttribute("ciudadAnterior",ciudad);
+        else
+            model.addAttribute("ciudadAnterior",cityService.getCity(ciudad));
+        if(categoria==0)
+            model.addAttribute("categoriaAnterior",categoria);
+        else
+            model.addAttribute("categoriaAnterior",categoryService.getCategory(categoria));
+        model.addAttribute("nameAnterior",name);
         return "restaurants";
     }
 

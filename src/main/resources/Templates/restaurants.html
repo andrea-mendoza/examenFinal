@@ -97,6 +97,7 @@
     <form style="display:flex" action="/search" method="get">
         <select id="ciudad" name="ciudad" style="width: 300px; color:orange" class="form-control" >
             <option value="0">Todas las ciudades</option>
+            <option th:if="${ciudadAnterior!=0}" th:value="${ciudadAnterior.id}" th:text="${ciudadAnterior.name}" selected="true"></option>
             <option style="color:orange"
                     th:each="city : ${ciudades}"
                     th:value="${city.id}"
@@ -104,15 +105,18 @@
         </select>
         <select id="categoria" name="categoria" style="width: 300px; color:orange" class="form-control" >
             <option value="0">Todas las categorias</option>
+            <option th:if="${categoriaAnterior!=0}" th:value="${categoriaAnterior.id}" th:text="${categoriaAnterior.name}" selected="true"></option>
             <option style="color:orange"
                     th:each="category : ${categorias}"
                     th:value="${category.id}"
                     th:text="${category.name}"></option>
         </select>
-        <input class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search" style="color:orange"/>
+        <input  class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search"  th:value="${nameAnterior}" style="color:orange"/>
         <input value = "Buscar" type="submit" class="btn btn-secondary" style="color:orange; background-color: rgba(1, 1, 36, 0.56);"/>
     </form>
-    <div id="map"></div>
+    <div th:if="${restaurants.size() > 0}" id="map"></div>
+    <br/>
+    <p th:if="${restaurants.size() == 0}" style="text-align:center; font-size:150%;">No se encontraron restaurantes</p>
     <div class="media jumbotron" th:each="restaurant: ${restaurants}">
         <div class="media-body">
             <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
