@@ -15,6 +15,37 @@
             color: orange;
         }
     </style>
+    <script th:inline="javascript">
+        function ratingStars(yellow,id ){
+            var rating= ''+id+'';
+            for (var gray = (5 - yellow); gray >= 1; gray--)
+            {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:gray; font-size:120%;";
+              document.getElementById(rating).appendChild(star);
+            }
+             if ((yellow*2) % 2 != 0) {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:gray; font-size:120%;";
+              document.getElementById(rating).appendChild(star);
+              var star1 = document.createElement("label");
+              star1.className = "half";
+              star1.style= "color:yellow; font-size:120%;";
+              document.getElementById(rating).appendChild(star1);
+            }
+            for ( ; yellow >= 1; yellow--)
+            {
+              var star = document.createElement("label");
+              star.className = "full";
+              star.style= "color:yellow; font-size:120%;";
+              document.getElementById(rating).appendChild(star);
+            }
+
+
+        }
+    </script>
 </head>
 <body>
 <h5><a href="javascript:history.back()">Volver</a></h5>
@@ -32,11 +63,13 @@
             <h4 class="media-heading" th:text="${restaurant.name}"></h4>
             <p th:text="${restaurant.category.name}"></p>
             <p th:text="${restaurant.city.name}"></p>
-            <div th:if="${restaurant.score > 0}">
-                <fieldset  class="rating" th:each="stars:${#numbers.sequence(1,{restaurant.score})}" >
-                    <label  style="color:yellow; font-size:120%;" ></label>
-                </fieldset>
-            </div>
+            <fieldset  class="rating"  th:id=" ${restaurant.id}" >
+                <script th:inline="javascript">
+                            var score = /*[[${restaurant.score}]]*/ '0';
+                            var id = /*[[${restaurant.id}]]*/ '0';
+                            ratingStars(score,id);
+                </script>
+            </fieldset>
         </div>
         <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
         <a th:href="${'/ADMIN/editRestaurant/' + restaurant.id}"><span class="glyphicon glyphicon-pencil">Editar</span></a>
