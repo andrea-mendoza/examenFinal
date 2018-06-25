@@ -328,7 +328,12 @@ public class RestaurantController {
             for(int i=0;i<restaurants.get(j).getComments().size();i++){
                 (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
             }
+            if(restaurants.get(j).getComments().size() > 0){
+                restaurants.get(j).setScore(restaurants.get(j).getScore()/ restaurants.get(j).getComments().size());
+                restaurants.get(j).setScore((float) (Math.round(restaurants.get(j).getScore()/0.5)*0.5));
+            }
         }
+
 
         restaurants.sort((s1, s2) -> s1.getScore().compareTo(s2.getScore()));
         Collections.reverse(restaurants);
