@@ -77,6 +77,46 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
+    public Iterable<Restaurant> getRestaurantByScore(Float score) {
+        return restaurantRepository.getRestaurantByScore(score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeCityScore(Integer cityid, Float score) {
+        return restaurantRepository.getRestaurantLikeCityScore(cityid,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeNameScore(String name, Float score) {
+        return restaurantRepository.getRestaurantLikeNameScore(name,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeCategoryScore(Integer categoryid, Float score) {
+        return restaurantRepository.getRestaurantLikeCategoryScore(categoryid,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeNameCityCategoryScore(String name, Integer cityid, Integer categoryid, Float score) {
+        return restaurantRepository.getRestaurantLikeNameCityCategoryScore(name,cityid, categoryid,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeNameCityScore(String name, Integer cityid, Float score) {
+        return restaurantRepository.getRestaurantLikeNameCityScore(name,cityid,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeNameCategoryScore(String name, Integer categoryid, Float score) {
+        return restaurantRepository.getRestaurantLikeNameCategoryScore(name,categoryid,score);
+    }
+
+    @Override
+    public Iterable<Restaurant> getRestaurantLikeCityCategoryScore(Integer cityid, Integer categoryid, Float score) {
+        return restaurantRepository.getRestaurantLikeCityCategoryScore(cityid,categoryid,score);
+    }
+
+    @Override
     public Iterable<Restaurant> listGeneralRanking(){
         return restaurantRepository.findTop5ByOrderByScoreDesc();
     }

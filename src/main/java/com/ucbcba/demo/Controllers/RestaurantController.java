@@ -80,6 +80,7 @@ public class RestaurantController {
     String searchRestaurant(@RequestParam(value = "name", required = false, defaultValue = "") String name,
                             @RequestParam(value = "categoria", required = false, defaultValue = "0") Integer categoria,
                             @RequestParam(value = "ciudad", required = false, defaultValue = "0") Integer ciudad,
+                            @RequestParam(value = "score", required = false, defaultValue = "0") Float score,
                             Model model) throws UnsupportedEncodingException {
 
         auth = SecurityContextHolder.getContext().getAuthentication();
@@ -90,32 +91,102 @@ public class RestaurantController {
             model.addAttribute("actualRole", userService.findByUsername(username).getRole());
         }
         List<Restaurant> restaurants = new ArrayList<>();
+//        if (!name.isEmpty()) {
+//            if (categoria > 0) {
+//                if (ciudad > 0) {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategory(name, ciudad, categoria);
+//                } else {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategory(name, categoria);
+//                }
+//            } else {
+//                if (ciudad > 0) {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCity(name, ciudad);
+//                } else {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByName(name);
+//                }
+//            }
+//        } else {
+//            if (categoria > 0) {
+//                if (ciudad > 0) {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategory(ciudad, categoria);
+//                } else {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
+//                }
+//            } else {
+//                if (ciudad > 0) {
+//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCity(ciudad);
+//                } else {
+//                    restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
+//                }
+//            }
+//        }
+
         if (!name.isEmpty()) {
             if (categoria > 0) {
                 if (ciudad > 0) {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategory(name, ciudad, categoria);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategoryScore(name,ciudad,categoria,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategory(name,ciudad,categoria);
+                    }
                 } else {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategory(name, categoria);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategoryScore(name,categoria,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategory(name, categoria);
+                    }
                 }
             } else {
                 if (ciudad > 0) {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCity(name, ciudad);
+                    if(score>0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityScore(name, ciudad,score);
+                    }
+                    else {
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCity(name, ciudad);
+                    }
                 } else {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByName(name);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameScore(name,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantByName(name);
+                    }
                 }
             }
         } else {
             if (categoria > 0) {
                 if (ciudad > 0) {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategory(ciudad, categoria);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategoryScore(ciudad,categoria,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategory(ciudad, categoria);
+                    }
                 } else {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCategoryScore(categoria,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
+                    }
                 }
             } else {
                 if (ciudad > 0) {
-                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCity(ciudad);
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityScore(ciudad,score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantByCity(ciudad);
+                    }
                 } else {
-                    restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
+                    if(score > 0){
+                        restaurants = (List<Restaurant>) restaurantService.getRestaurantByScore(score);
+                    }
+                    else{
+                        restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
+                    }
                 }
             }
         }
