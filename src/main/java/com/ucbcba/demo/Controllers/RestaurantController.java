@@ -69,6 +69,16 @@ public class RestaurantController {
                 fot = new String(bytes, "UTF-8");
                 restaurants.get(i).setF(fot);
             }
+            for(int j=0;j<restaurants.size();j++){
+                restaurants.get(j).setScore((float) 0);
+                for(int i=0;i<restaurants.get(j).getComments().size();i++){
+                    (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
+                }
+                if(restaurants.get(j).getComments().size() > 0){
+                    restaurants.get(j).setScore(restaurants.get(j).getScore()/ restaurants.get(j).getComments().size());
+                    restaurants.get(j).setScore((float) (Math.round(restaurants.get(j).getScore()/0.5)*0.5));
+                }
+            }
             model.addAttribute("restaurants", restaurants);
         }
         model.addAttribute("user", user);
@@ -175,6 +185,16 @@ public class RestaurantController {
             longitudes.add(restaurants.get(i).getLongitude());
             titulos.add(restaurants.get(i).getName());
             ids.add(restaurants.get(i).getId());
+        }
+        for(int j=0;j<restaurants.size();j++){
+            restaurants.get(j).setScore((float) 0);
+            for(int i=0;i<restaurants.get(j).getComments().size();i++){
+                (restaurants.get(j)).setScore((restaurants.get(j)).getScore() + ((restaurants.get(j)).getComments().get(i).getScore()));
+            }
+            if(restaurants.get(j).getComments().size() > 0){
+                restaurants.get(j).setScore(restaurants.get(j).getScore()/ restaurants.get(j).getComments().size());
+                restaurants.get(j).setScore((float) (Math.round(restaurants.get(j).getScore()/0.5)*0.5));
+            }
         }
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
