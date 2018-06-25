@@ -91,36 +91,6 @@ public class RestaurantController {
             model.addAttribute("actualRole", userService.findByUsername(username).getRole());
         }
         List<Restaurant> restaurants = new ArrayList<>();
-//        if (!name.isEmpty()) {
-//            if (categoria > 0) {
-//                if (ciudad > 0) {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCityCategory(name, ciudad, categoria);
-//                } else {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCategory(name, categoria);
-//                }
-//            } else {
-//                if (ciudad > 0) {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeNameCity(name, ciudad);
-//                } else {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByName(name);
-//                }
-//            }
-//        } else {
-//            if (categoria > 0) {
-//                if (ciudad > 0) {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantLikeCityCategory(ciudad, categoria);
-//                } else {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCategory(categoria);
-//                }
-//            } else {
-//                if (ciudad > 0) {
-//                    restaurants = (List<Restaurant>) restaurantService.getRestaurantByCity(ciudad);
-//                } else {
-//                    restaurants = (List<Restaurant>) restaurantService.listAllRestaurants();
-//                }
-//            }
-//        }
-
         if (!name.isEmpty()) {
             if (categoria > 0) {
                 if (ciudad > 0) {
@@ -196,6 +166,7 @@ public class RestaurantController {
         List<Double> latitudes = new ArrayList<>();
         List<Double> longitudes = new ArrayList<>();
         List<String> titulos = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
         for (int i = 0; i < restaurants.size(); i++) {
             bytes = Base64.encode(restaurants.get(i).getFoto());
             fot = new String(bytes, "UTF-8");
@@ -203,11 +174,13 @@ public class RestaurantController {
             latitudes.add(restaurants.get(i).getLatitude());
             longitudes.add(restaurants.get(i).getLongitude());
             titulos.add(restaurants.get(i).getName());
+            ids.add(restaurants.get(i).getId());
         }
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("latitudes", latitudes);
         model.addAttribute("longitudes", longitudes);
         model.addAttribute("titulos", titulos);
+        model.addAttribute("ids", ids);
         model.addAttribute("size", restaurants.size());
         model.addAttribute("ciudades", cityService.listAllCities());
         model.addAttribute("categorias", categoryService.listAllCategories());
@@ -336,25 +309,8 @@ public class RestaurantController {
         }
         return "redirect:/";
     }
-    @RequestMapping("/ranking")
-    public String ranking(Model model) throws UnsupportedEncodingException {
-        List<Restaurant> restaurants = (List<Restaurant>)restaurantService.listGeneralRanking();
-        byte[] bytes;
-        String fot;
-        List<Double> latitudes = new ArrayList<>();
-        List<Double> longitudes = new ArrayList<>();
-        for (int i = 0; i < restaurants.size(); i++) {
-            bytes = Base64.encode(restaurants.get(i).getFoto());
-            fot = new String(bytes, "UTF-8");
-            restaurants.get(i).setF(fot);
-            latitudes.add(restaurants.get(i).getLatitude());
-            longitudes.add(restaurants.get(i).getLongitude());
-        }
-        model.addAttribute("restaurants", restaurants);
-        return "ranking";
-    }
 
-    @RequestMapping("/rankingCategorias")
+    @RequestMapping("/ranking")
     public String ranking(@RequestParam(value = "categoria", required = false, defaultValue = "0") Integer categoria,Model model) throws UnsupportedEncodingException {
         List<Restaurant> restaurants;
         byte[] bytes;

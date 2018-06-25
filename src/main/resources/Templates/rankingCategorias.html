@@ -55,7 +55,9 @@
     </form>
     <div class="media jumbotron" th:each="restaurant: ${restaurants}">
         <div class="media-body">
-            <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+            <a th:href="${'/showRestaurant/' + restaurant.id}">
+                <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+            </a>
             <h4 class="media-heading" th:text="${restaurant.name}"></h4>
             <p th:text="${restaurant.category.name}"></p>
             <p th:text="${restaurant.city.name}"></p>
@@ -67,7 +69,6 @@
                 </script>
             </fieldset>
         </div>
-        <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
     </div>
 </div>
 </body>
