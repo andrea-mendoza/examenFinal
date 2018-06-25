@@ -51,10 +51,7 @@
                 var clickLon = event.latLng.lng();
                 var latlng = new google.maps.LatLng(clickLat,clickLon);
                 latlngDestination = latlng;
-                var marker = new google.maps.Marker({
-                      position: latlng,
-                      map: map
-                });
+                calculateRoute();
         });
         function calculateRoute(){
             var request = {
@@ -67,9 +64,6 @@
                     directionsDisplay.setDirections(result);
                 }
             });
-        }
-        document.getElementById('get').onclick = function(){
-            calculateRoute();
         }
       }
     </script>
@@ -114,8 +108,6 @@
             <img class="info" th:src="@{'data:image/jpg;base64,' + ${fot} }" width="600px" height="400px"/>
         </div>
         <br/>
-
-
         <div class="page-header">
             <h2><strong th:text="${restaurant.name}"></strong></h2>
         </div>
@@ -123,7 +115,6 @@
                 <p>Ciudad: <span th:text="${restaurant.city.name}"></span></p>
                 <p>Direccion: <span th:text="${restaurant.direction}"></span></p>
                 <div id="map"></div>
-                <button id="get">SetRoute</button>
                 <p>Telefono: <span th:text="${restaurant.phone}"></span></p>
                 <p>Categoria: <span th:text="${restaurant.category.name}"></span></p>
                 <p>Likes: <span th:text="${restaurant.likeRestaurants.size()}"></span></p>
