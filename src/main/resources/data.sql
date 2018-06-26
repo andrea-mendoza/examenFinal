@@ -4,6 +4,13 @@ delete from restaurant;
 delete from user;
 delete from city;
 delete from category;
+delete from level_restaurant;
+
+insert into level_restaurant(id, name, rating) values (100, 'Impopular', 1);
+insert into level_restaurant(id, name, rating) values (101, 'Poco Popular', 2);
+insert into level_restaurant(id, name, rating) values (102, 'Intermedio', 3);
+insert into level_restaurant(id, name, rating) values (103, 'Popular' , 4);
+insert into level_restaurant(id, name, rating) values (104, 'Muy Popular', 5);
 
 insert into city(id, name) values (1, 'Cochabamba');
 insert into city(id, name) values (2, 'Santa Cruz');
