@@ -57,23 +57,31 @@
             onclick="window.location.href='/logout'">Cerrar sesion</button>
     <button class="btn btn-s econdary" style="color: #00002D; background-color: orange;"
             onclick="window.location.href='/ADMIN/newRestaurant'">Nuevo restaurante</button>
-    <div class="media jumbotron" th:each="restaurant: ${restaurants}">
-        <div class="media-body">
-            <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
-            <h4 class="media-heading" th:text="${restaurant.name}"></h4>
-            <p th:text="${restaurant.category.name}"></p>
-            <p th:text="${restaurant.city.name}"></p>
-            <fieldset  class="rating"  th:id=" ${restaurant.id}" >
-                <script th:inline="javascript">
-                            var score = /*[[${restaurant.score}]]*/ '0';
-                            var id = /*[[${restaurant.id}]]*/ '0';
-                            ratingStars(score,id);
-                </script>
-            </fieldset>
+    <div class="jumbotron" th:each="restaurant: ${restaurants}">
+        <div class="row">
+            <div class="col-md-4">
+                <a th:href="${'/showRestaurant/' + restaurant.id}">
+                    <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <h4 class="media-heading" th:text="${restaurant.name}"></h4>
+                <p th:text="${restaurant.category.name}"></p>
+                <p th:text="${restaurant.city.name}"></p>
+                <fieldset  class="rating"  th:id=" ${restaurant.id}" >
+                    <script th:inline="javascript">
+                                var score = /*[[${restaurant.score}]]*/ '0';
+                                var id = /*[[${restaurant.id}]]*/ '0';
+                                ratingStars(score,id);
+                    </script>
+                </fieldset>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-warning btn-block" th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
+                <a class="btn btn-warning btn-block" th:href="${'/ADMIN/editRestaurant/' + restaurant.id}"><span class="glyphicon glyphicon-pencil">Editar</span></a>
+                <a class="btn btn-warning btn-block" th:href="${'/ADMIN/deleteRestaurant/' + restaurant.id}"><span class="glyphicon glyphicon-trash">Eliminar</span></a>
+            </div>
         </div>
-        <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
-        <a th:href="${'/ADMIN/editRestaurant/' + restaurant.id}"><span class="glyphicon glyphicon-pencil">Editar</span></a>
-        <a th:href="${'/ADMIN/deleteRestaurant/' + restaurant.id}"><span class="glyphicon glyphicon-trash">Eliminar</span></a>
     </div>
 </div>
 </body>

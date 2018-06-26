@@ -12,11 +12,18 @@
 <body>
 <h5><a href="javascript:history.back()">Volver</a></h5>
 <div class="container">
-    <div>
-        <img class="media-object" th:src="@{'data:image/jpg;base64,' + ${fot} }" width="200px;" height="200px;"/>
-    </div>
-    <div class="page-header">
-        <h2><strong th:text="${user.username}"></strong></h2>
+    <div class="row">
+        <div class="col-md-4">
+            <img class="media-object" th:src="@{'data:image/jpg;base64,' + ${fot} }" width="200px;" height="200px;"/>
+        </div>
+        <div class="col-md-6">
+            <h2><strong th:text="${user.username}"></strong></h2>
+        </div>
+        <div class="col-md-2">
+            <form th:action="${'/editProfile/' + user.id}" method="POST">
+                <button class="btn btn-secondary" style="color: #00002D; background-color: orange;">Editar perfil</button>
+            </form>
+        </div>
     </div>
     <div>
         <p>Nombre: <span th:text="${user.name}"></span></p>
@@ -25,11 +32,6 @@
         <p>Descripcion: <span th:text="${user.descripcion}"></span></p>
         <p>Intereses: <span th:text="${user.intereses}"></span></p>
         <p>Aficiones: <span th:text="${user.aficiones}"></span></p>
-
-        <form th:action="${'/editProfile/' + user.id}" method="POST">
-            <button class="btn btn-secondary" style="color: #00002D; background-color: orange;">Editar perfil</button>
-        </form>
-
     </div>
 </div>
 </body>

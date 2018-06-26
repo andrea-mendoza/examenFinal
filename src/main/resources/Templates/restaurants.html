@@ -17,7 +17,7 @@
     </style>
     <style>
        #map {
-         width: 80%;
+        width: 100%;
         height: 500px;
         border:double;
        }
@@ -134,21 +134,25 @@
     <div th:if="${restaurants.size() > 0}" id="map"></div>
     <br/>
     <p th:if="${restaurants.size() == 0}" style="text-align:center; font-size:150%;">No se encontraron restaurantes</p>
-    <div class="media jumbotron" th:each="restaurant: ${restaurants}">
-        <div class="media-body">
-            <a th:href="${'/showRestaurant/' + restaurant.id}">
-                <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
-            </a>
-            <h4 class="media-heading" th:text="${restaurant.name}"></h4>
-            <p th:text="${restaurant.category.name}"></p>
-            <p th:text="${restaurant.city.name}"></p>
-            <fieldset  class="rating"  th:id=" ${restaurant.id}" >
-                <script th:inline="javascript">
-                            var score = /*[[${restaurant.score}]]*/ '0';
-                            var id = /*[[${restaurant.id}]]*/ '0';
-                            ratingStars(score,id);
-                </script>
-            </fieldset>
+    <div class="jumbotron" th:each="restaurant: ${restaurants}">
+        <div class="row">
+            <div class="col-md-4">
+                <a th:href="${'/showRestaurant/' + restaurant.id}">
+                    <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+                </a>
+            </div>
+            <div class="col-md-8">
+                <h4 class="media-heading" th:text="${restaurant.name}"></h4>
+                <p th:text="${restaurant.category.name}"></p>
+                <p th:text="${restaurant.city.name}"></p>
+                <fieldset  class="rating"  th:id=" ${restaurant.id}" >
+                    <script th:inline="javascript">
+                                var score = /*[[${restaurant.score}]]*/ '0';
+                                var id = /*[[${restaurant.id}]]*/ '0';
+                                ratingStars(score,id);
+                    </script>
+                </fieldset>
+            </div>
         </div>
     </div>
 </div>
