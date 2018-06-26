@@ -41,10 +41,10 @@ Categorias:
         -Cafes y Teterias
 
 
-Se esta trabajando con el locahost en el puerto: 8081
-El usuario de la base de datos es: root
-La contrasenia de la base de datos es: root
-El nombre de la base de datos es: rescrud2
+- Se esta trabajando con el locahost en el puerto: 8081
+- El usuario de la base de datos es: root
+- La contrasenia de la base de datos es: root
+- El nombre de la base de datos es: rescrud2
 
 
 
