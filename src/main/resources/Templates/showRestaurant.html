@@ -118,8 +118,15 @@
                 <p>Telefono: <span th:text="${restaurant.phone}"></span></p>
                 <p>Categoria: <span th:text="${restaurant.category.name}"></span></p>
                 <p>Likes: <span th:text="${restaurant.likeRestaurants.size()}"></span></p>
-                <p>Ranking:</p>
-                <div style="display: flex;" >
+                <p>Nivel: <span th:text="${restaurant.level.name}"></span></p>
+                <!--<p>Ranking por nivel: <span th:text="${restaurant.level.rating}" style="color:red"></span></p>-->
+                <!--<p>Nivel por usuarios: <span th:text="${restaurant.level.rating}" style="color:red"></span></p>-->
+                <div th:switch="${restaurant.score}">
+                    <p th:case="${restaurant.score} == ${restaurant.level.rating}" style="color:yellow">Ranking usuarios:</p>
+                    <p th:case="${restaurant.score} > ${restaurant.level.rating}" style="color:green">Ranking usuarios:</p>
+                    <p th:case="*" style="color:red" >Ranking usuarios:</p>
+                </div>
+                <div style="display: flex;">
                     <fieldset  class="rating" id="rating"> </fieldset>
                 </div>
                 <form th:action="@{/restaurant/like}" method="POST" style="align: left">

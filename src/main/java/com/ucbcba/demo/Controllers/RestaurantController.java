@@ -253,6 +253,7 @@ public class RestaurantController {
     }
     @RequestMapping("/ADMIN/editRestaurant/{id}")
     String editRestaurant(@PathVariable Integer id, Model model) {
+        model.addAttribute("levels", levelRestaurantService.listAllLevels());
         model.addAttribute("restaurant", restaurantService.getRestaurant(id));
         model.addAttribute("categories", categoryService.listAllCategories());
         model.addAttribute("cities", cityService.listAllCities());
