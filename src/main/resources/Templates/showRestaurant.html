@@ -119,11 +119,18 @@
                 <p>Categoria: <span th:text="${restaurant.category.name}"></span></p>
                 <p>Likes: <span th:text="${restaurant.likeRestaurants.size()}"></span></p>
                 <p>Nivel: <span th:text="${restaurant.level.name}"></span></p>
-                <!--<p>Ranking por nivel: <span th:text="${restaurant.level.rating}" style="color:red"></span></p>-->
-                <!--<p>Nivel por usuarios: <span th:text="${restaurant.level.rating}" style="color:red"></span></p>-->
+                <p>Nivel Usuarios: </p>
+                <div th:switch="${restaurant.score}">
+                    <p th:case="${restaurant.score} == 1"> Impopular</p>
+                    <p th:case="${restaurant.score} == 2"> Poco Popular</p>
+                    <p th:case="${restaurant.score} == 3"> Intermedio</p>
+                    <p th:case="${restaurant.score} == 4"> Popular</p>
+                    <p th:case="${restaurant.score} == 5"> Muy Popular</p>
+                    <p th:case="*"> Impopular</p>
+                </div>
                 <div th:switch="${restaurant.score}">
                     <p th:case="${restaurant.score} == ${restaurant.level.rating}" style="color:yellow">Ranking usuarios:</p>
-                    <p th:case="${restaurant.score} > ${restaurant.level.rating}" style="color:green">Ranking usuarios:</p>
+                    <p th:case="${restaurant.score} >= ${restaurant.level.rating}" style="color:green">Ranking usuarios:</p>
                     <p th:case="*" style="color:red" >Ranking usuarios:</p>
                 </div>
                 <div style="display: flex;">
