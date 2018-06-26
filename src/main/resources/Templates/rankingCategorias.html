@@ -6,14 +6,7 @@
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"/>
-    <script src="../static/js/jquery.js" th:src="@{/js/jquery.js}"/>
-    <script src="../static/js/bootstrap.js" th:src="@{js/bootstrap.js}"/>
     <script th:inline="javascript">
-        $(document).ready(function(){
-            $('#categoria').on('change', function() {
-                $('#formCategory').submit();
-            })
-        });
         function ratingStars(yellow,id ){
             var rating= ''+id+'';
             for (var gray = (5 - yellow); gray >= 1; gray--)
@@ -50,7 +43,7 @@
     <div class="page-header">
         <h2><strong>Ranking</strong></h2>
     </div>
-    <form id="formCategory" style="display:flex" action="/ranking" method="get">
+    <form style="display:flex" action="/ranking" method="get">
         <select id="categoria" name="categoria" style="width: 300px; color:orange" class="form-control" >
             <option value="0">Todas las categorias</option>
             <option style="color:orange"
@@ -58,6 +51,7 @@
                     th:value="${category.id}"
                     th:text="${category.name}"></option>
         </select>
+        <button type="submit" class="btn btn-warning">Buscar</button>
     </form>
     <div class="jumbotron" th:each="restaurant: ${restaurants}">
         <div class="row">
