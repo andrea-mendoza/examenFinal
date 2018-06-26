@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 @Controller
 public class RestaurantController {
@@ -28,6 +29,12 @@ public class RestaurantController {
     private LikeRestaurantService likeRestaurantService;
     private Authentication auth;
     private String username;
+    private LevelRestaurantService levelRestaurantService;
+
+    @Autowired
+    public void setLevelRestaurantService(LevelRestaurantService levelRestaurantService){
+        this.levelRestaurantService = levelRestaurantService;
+    }
 
     @Autowired
     public void setRestaurantService(RestaurantService restaurantService){ this.restaurantService = restaurantService; }
@@ -218,7 +225,8 @@ public class RestaurantController {
 
     @RequestMapping("/ADMIN/newRestaurant")
     String newRestaurant(Model model) {
-        model.addAttribute("restaurant",new Restaurant());
+        model.addAttribute("restaurant", new Restaurant());
+        model.addAttribute("levels", levelRestaurantService.listAllLevels());
         model.addAttribute( "categories", categoryService.listAllCategories());
         model.addAttribute("cities", cityService.listAllCities());
         return "newRestaurant";

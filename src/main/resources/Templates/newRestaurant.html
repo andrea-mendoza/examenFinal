@@ -73,8 +73,13 @@
             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
         </select>
         <br/>
+        <p>Ciudad</p>
         <select class="form-control" style="width: 250px; color: orange;" th:field="*{city}">
             <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+        </select>
+        <p>Nivel del Restaurante</p>
+        <select class="form-control" style="width: 250px; color: orange;" th:field="*{level}">
+            <option th:each="levelRestaurant : ${levels}" th:value="${levelRestaurant.id}" th:text="${levelRestaurant.name}"></option>
         </select>
         <br />
         <input type="file" name="file" id="foto" required="required"/>
