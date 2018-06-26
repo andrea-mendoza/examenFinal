@@ -129,7 +129,7 @@
                     <p th:case="*"> Impopular</p>
                 </div>
                 <div th:switch="${restaurant.score}">
-                    <p th:case="${restaurant.score} == ${restaurant.level.rating}" style="color:yellow">Ranking usuarios:</p>
+                    <p th:case="${restaurant.level.rating}" style="color:yellow">Ranking usuarios:</p>
                     <p th:case="${restaurant.score} >= ${restaurant.level.rating}" style="color:green">Ranking usuarios:</p>
                     <p th:case="*" style="color:red" >Ranking usuarios:</p>
                 </div>
