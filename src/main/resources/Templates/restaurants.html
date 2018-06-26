@@ -111,12 +111,6 @@
                     th:value="${category.id}"
                     th:text="${category.name}"></option>
         </select>
-<<<<<<< HEAD
-
-        <!--<select id="score" name="score" style="width: 300px; color:orange" class="form-control" >-->
-            <!--<option value="0" class="rating"> </option>-->
-            <!--<option value="1" th:each="stars:${#numbers.sequence(1,1)}"> </option>-->
-        <!--</select>-->
 
         <select id="score" name="score" style="width: 300px; color:orange" class="form-control" >
             <option value="0"> </option>
@@ -128,9 +122,6 @@
         </select>
 
         <input class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search" style="color:orange"/>
-=======
-        <input  class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search"  th:value="${nameAnterior}" style="color:orange"/>
->>>>>>> 5acecbd6145e0dd4f452f55dc28dae9a7fe3ddd5
         <input value = "Buscar" type="submit" class="btn btn-secondary" style="color:orange; background-color: rgba(1, 1, 36, 0.56);"/>
     </form>
     <div th:if="${restaurants.size() > 0}" id="map"></div>
