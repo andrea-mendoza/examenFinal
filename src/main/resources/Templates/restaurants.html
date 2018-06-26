@@ -32,6 +32,7 @@
         var lats = /*[[${latitudes}]]*/ '[]';
         var lons = /*[[${longitudes}]]*/ '[]';
         var titulos = /*[[${titulos}]]*/ '[]';
+        var ids = /*[[${ids}]]*/ '[]';
 
         while(tam > i){
             console.log(tam);
@@ -51,7 +52,12 @@
             var marker = new google.maps.Marker({
               position: latlng,
               map: map,
-              title: titulos[i]
+              title: titulos[i],
+              url: 'showRestaurant/' + ids[i]
+            });
+
+            google.maps.event.addListener(marker,'click',function(){
+                window.location.href = this.url;
             });
             i++;
         }
@@ -113,15 +119,16 @@
         </select>
 
         <select id="score" name="score" style="width: 300px; color:orange" class="form-control" >
-            <option value="0"> </option>
-            <option value="1"> * </option>
-            <option value="2"> ** </option>
-            <option value="3"> *** </option>
-            <option value="4"> **** </option>
-            <option value="5"> ***** </option>
+            <option value="0"> Todas las estrellas </option>
+            <option value="1"> > 0 estrellas </option>
+            <option value="2"> > 1 estrella </option>
+            <option value="3"> > 2 estrellas </option>
+            <option value="4"> > 3 estrellas </option>
+            <option value="5"> > 4 estrellas </option>
         </select>
 
-        <input class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search" style="color:orange"/>
+        <input  class="form-control my-0 py-1" type="text" id ="name" name="name" th:placeholder="Search..." aria-label="Search"  th:value="${nameAnterior}" style="color:orange"/>
+
         <input value = "Buscar" type="submit" class="btn btn-secondary" style="color:orange; background-color: rgba(1, 1, 36, 0.56);"/>
     </form>
     <div th:if="${restaurants.size() > 0}" id="map"></div>
@@ -129,7 +136,9 @@
     <p th:if="${restaurants.size() == 0}" style="text-align:center; font-size:150%;">No se encontraron restaurantes</p>
     <div class="media jumbotron" th:each="restaurant: ${restaurants}">
         <div class="media-body">
-            <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+            <a th:href="${'/showRestaurant/' + restaurant.id}">
+                <img class="media-object" th:src="@{'data:image/jpg;base64,' +  ${restaurant.f}}" width="300px;" height="200px;"/>
+            </a>
             <h4 class="media-heading" th:text="${restaurant.name}"></h4>
             <p th:text="${restaurant.category.name}"></p>
             <p th:text="${restaurant.city.name}"></p>
@@ -141,7 +150,6 @@
                 </script>
             </fieldset>
         </div>
-        <a th:href="${'/showRestaurant/' + restaurant.id}">Ver</a>
     </div>
 </div>
 </body>

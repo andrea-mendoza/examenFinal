@@ -56,6 +56,7 @@ public class UserController {
     @RequestMapping("/editProfile/{id}")
     String editRestaurant(@PathVariable Integer id, Model model) {
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("cities", cityService.listAllCities());
         return "editPerfil";
     }
 
